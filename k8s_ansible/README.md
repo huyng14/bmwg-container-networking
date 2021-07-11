@@ -1,4 +1,4 @@
-# OPNFV - k8s cluster setup
+# k8s cluster setup
 
 This project aims to set up and programmatically deploy a Kubernetes cluster on CentOS 7 machines with the help of Kubeadm. It uses ansible and requires very little intervention.
 
@@ -20,18 +20,17 @@ In order the configure the cluster, we'll need to modify the `hosts` and `env_va
 
 ```
 [master]
-master ansible_host=10.10.120.22 ansible_connection=local ansible_user=opnfv ansible_password=opnfv
-#master ansible_host=10.10.120.22 ansible_connection=ssh ansible_ssh_user=opnfv ansible_ssh_pass=opnfv ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+master ansible_host=192.168.26.40 ansible_connection=local ansible_user=root ansible_password=123456
 
 [worker]
-worker ansible_host=10.10.120.21 ansible_connection=ssh ansible_ssh_user=opnfv ansible_ssh_pass=opnfv ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+worker ansible_host=192.168.26.41 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass=123456 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 ```
 In this configuration file, connection details should be filled in. In case more nodes within the cluster are needed, add lines as necessary to the worker group within the `hosts` file.
 
 In the `env_variables` file the following parameters should be entered as per your environment
 
-ad_addr: 10.10.120.22
+ad_addr: 192.168.26.40
 cidr_v: 10.244.0.0/16
 
 In ad_addr enter your master node advertise ip address and in cidr_v your cidr range for the pods.
@@ -55,3 +54,5 @@ ansible-playbook clear_k8s_cluster.yml
 
 ### Debugging
 In case a step goes wrong within the installation, ansible should display a message, however, there's also files to debug if the installation had something to do within k8s. In the case of the master node, we should be able to find a `join_token.txt` with necessary logs. On worker nodes, the relevant file is `node_joined.txt`.
+
+### Source code from ViNePerf project: https://wiki.anuket.io/display/HOME/ViNePERF
