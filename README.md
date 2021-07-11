@@ -1,4 +1,3 @@
-# bmwg-container-networking
 # Hardware Specification
 
 ![topology](images/topology.png)
