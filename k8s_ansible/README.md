@@ -8,7 +8,7 @@ The following steps aim to describe the minimum required to successfully run thi
 
 ### Prerequisites
 
-Kubernetes and Ansible should be installed on the master node and docker and kubelet services should be running.
+Ansible should be installed on the master node. 
 
 Hardware prerequisites as suggested by Kubernetes documentation:
 
