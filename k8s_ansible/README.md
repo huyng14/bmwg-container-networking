@@ -52,10 +52,11 @@ On both master & worker:
 	systemctl status docker
 
 ### Step 3: Set Hostname on Nodes
-
-	sudo hostnamectl set-hostname master-node
-	sudo hostnamectl set-hostname worker-node1
-
+```
+sudo hostnamectl set-hostname master-node
+sudo hostnamectl set-hostname worker-node1
+sudo reboot
+```
 On both master & worker:	
 
 ```
