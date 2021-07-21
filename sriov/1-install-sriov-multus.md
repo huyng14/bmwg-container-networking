@@ -408,6 +408,11 @@ spec:
 # C7.Deploy SR-IOV pod
 
 ```
+docker pull huyng14/dpdkapp-v19.08
+
+```
+
+```
 root@master ~/s/my-sriov# cat sriov-pod.yaml
 apiVersion: v1
 kind: Pod
@@ -418,7 +423,7 @@ metadata:
 spec:
   containers:
   - name: sriov-pod
-    image: dpdk-app-centos:latest
+    image: huyng14/dpdkapp-v19.08:latest
     imagePullPolicy: IfNotPresent
     securityContext:
       privileged: true
