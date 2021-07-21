@@ -189,34 +189,6 @@ wget https://trex-tgn.cisco.com/trex/release/v2.37.tar.gz
 vi /etc/trex_cfg.yaml
 ```
 
-```
-Example trex_cfg.yaml file:
-- version         : 2
-  interfaces      : ["86:00.0","86:00.1"]
-  port_limit      : 2
-  enable_zmq_pub  : true  # enable publisher for stats data
-  c               : 4
-# for system of 1Gb/sec NIC or VM enable this
-  port_bandwidth_gb : 40  # port bandwidth 10Gb/sec , for VM put here 1 for XL710 put 40
-  platform :
-        master_thread_id  : 0
-        latency_thread_id : 5
-        dual_if   :
-             - socket   : 0
-               threads  : [1,2,3,4,6,7,8,9,10,11]
-  port_info       :  # set eh mac addr
-          - dest_mac        :  40:a6:b7:19:f2:39        # port 0, in case SR-IOV, destmac is VNF's mac
-            src_mac         :  40:a6:b7:19:f2:38
-          - dest_mac        :  40:a6:b7:19:f2:38        # port 1
-            src_mac         :  40:a6:b7:19:f2:39
-
-#  port_info
-#         - dest_mac        : 40:a6:b7:19:f2:39
-#           src_mac         : 40:a6:b7:19:f2:38
-#         - dest_mac        : 40:a6:b7:19:f2:38
-#           src_mac         : 40:a6:b7:19:f2:39
-
-```
 
 ```bash
 ./t-rex-64 -i -c 4
