@@ -118,10 +118,11 @@ l2fwd -n 4 -l 38-39 --master-lcore 38 --socket-mem=0,1024 -w 0000:af:02.0 -w 000
     link/ether 56:fe:9f:f2:8a:87 brd ff:ff:ff:ff:ff:ff link-netnsid 0
 ```
 
-vf 0 MAC 22:cd:67:1e:c2:5f, spoof checking off, link-state auto, trust on
-vf 0 MAC a2:e4:f8:fe:9b:1e, spoof checking off, link-state auto, trust on
-are running as interfaces on POD
-
+```
+> vf 0 MAC 22:cd:67:1e:c2:5f, spoof checking off, link-state auto, trust on
+> vf 0 MAC a2:e4:f8:fe:9b:1e, spoof checking off, link-state auto, trust on
+> are running as interfaces on POD
+```
 
 
 # C2.Generating traffic
