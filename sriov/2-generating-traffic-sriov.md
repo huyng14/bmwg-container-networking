@@ -1,5 +1,6 @@
 # L2fwd
-docker pull huyng14/dpdkapp-v19.08
+`docker pull huyng14/dpdkapp-v19.08`
+
 ```
 [root@sriov-pod /]#
  0000:af:02.0 -w 0000:af:0a.0 -- -p 0x3 -T 120 --no-mac-updatinget-mem=0,1024 -w
