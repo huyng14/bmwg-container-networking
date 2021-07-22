@@ -33,6 +33,7 @@ echo 2 > /sys/class/net/enp175s0f0/device/sriov_numvfs
 echo 2 > /sys/class/net/enp175s0f1/device/sriov_numvfs
 ```
 
+```
 > [root@worker ~]# ip link
 > 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
 >     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -52,15 +53,15 @@ echo 2 > /sys/class/net/enp175s0f1/device/sriov_numvfs
 >     link/ether 02:42:c0:c7:2e:c9 brd ff:ff:ff:ff:ff:ff
 > 7: flannel.1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UNKNOWN mode DEFAULT group default
 >     link/ether aa:2f:ab:c9:96:2b brd ff:ff:ff:ff:ff:ff
+```
 
-
-
+```
 > [root@worker ~]# lspci | grep "Virtual Function"
 > af:02.0 Ethernet controller: Intel Corporation Ethernet Virtual Function 700 Series (rev 02)
 > af:02.1 Ethernet controller: Intel Corporation Ethernet Virtual Function 700 Series (rev 02)
 > af:0a.0 Ethernet controller: Intel Corporation Ethernet Virtual Function 700 Series (rev 02)
 > af:0a.1 Ethernet controller: Intel Corporation Ethernet Virtual Function 700 Series (rev 02)
-
+```
 - Optionally, make configuration persistent by appending to `rc.local`
 
 ## Bring up PF interfaces
@@ -113,7 +114,7 @@ Network devices using kernel driver
 ## Turn on DMAR|IOMMU
 
 Enable IOMMU on Host
-
+```
 > [root@worker usertools]# cat /etc/default/grub
 > GRUB_TIMEOUT=5
 > GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
@@ -122,13 +123,13 @@ Enable IOMMU on Host
 > GRUB_TERMINAL_OUTPUT="console"
 > GRUB_CMDLINE_LINUX="crashkernel=auto spectre_v2=retpoline rd.lvm.lv=centos/root rd.lvm.lv=centos/swap rhgb quiet **intel_iommu=on** iommu=pt"
 > GRUB_DISABLE_RECOVERY="true"
-
+```
 ```
 grub2-mkconfig -o /boot/grub2/grub.cfg
 grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
 reboot
 ```
-
+```
 > [root@worker usertools]# dmesg |grep -E "DMAR|IOMMU"
 > [    0.000000] ACPI: DMAR 000000006c020000 001D0 (v01 INTEL  S2600WF  00000001 INTL 20091013)
 > [    0.000000] DMAR: IOMMU enabled
@@ -188,7 +189,7 @@ reboot
 > [  674.158783] DMAR: 64bit 0000:af:02.1 uses identity mapping
 > [  678.248078] DMAR: 64bit 0000:af:0a.0 uses identity mapping
 > [  678.252061] DMAR: 64bit 0000:af:0a.1 uses identity mapping
-
+```
 Refer: https://www.server-world.info/en/note?os=CentOS_7&p=kvm&f=10
 
 # C1.Build SR-IOV CNI
@@ -227,6 +228,7 @@ On a successful build, a docker image with tag `nfvpe/sriov-device-plugin:latest
 
 Refer: https://github.com/k8snetworkplumbingwg/sriov-network-device-plugin#configurations
 
+```
 > [root@worker ~]# lspci -vmmnn |grep -i ethernet
 > Class:  Ethernet controller [0200]
 > Device: Ethernet Connection X722 for 10GBASE-T [37d2]
@@ -285,13 +287,14 @@ Refer: https://github.com/k8snetworkplumbingwg/sriov-network-device-plugin#confi
 >         ]
 >     }
 > root@master ~/s/s/deployments (master)#
-
+```
 
 
 ```
 root@master ~/s/s/deployments (master)# kubectl create -f configMap.yaml
 ```
 
+```
 > root@master ~/s/s/deployments (master) [1]# kubectl get configmaps -A
 > NAMESPACE         NAME                                 DATA   AGE
 > default           kube-root-ca.crt                     1      113d
@@ -308,7 +311,7 @@ root@master ~/s/s/deployments (master)# kubectl create -f configMap.yaml
 > kube-system       kubelet-config-1.20                  1      113d
 > kube-system       multus-cni-config                    1      99d
 > kube-system       **sriovdp-config**                       1      67s
-
+```
 
 
 # C5.Deploy SR-IOV network device plugin Daemonset
@@ -323,6 +326,7 @@ daemonset.apps/kube-sriov-device-plugin-ppc64le created
 daemonset.apps/kube-sriov-device-plugin-arm64 created
 ```
 
+```
 > root@master ~/s/s/d/k8s-v1.16 (master)# kubectl get pod -A
 > NAMESPACE     NAME                                   READY   STATUS    RESTARTS   AGE
 > kube-system   coredns-74ff55c5b-5r8jk                1/1     Running   7          113d
@@ -339,7 +343,7 @@ daemonset.apps/kube-sriov-device-plugin-arm64 created
 > kube-system   kube-scheduler-master                  1/1     Running   17         113d
 > kube-system   **kube-sriov-device-plugin-amd64-8mgjc**   1/1     Running   0          69s
 > kube-system   **kube-sriov-device-plugin-amd64-zrbxf**   1/1     Running   0          69s
-
+```
 
 
 # C6. Deploy SR-IOV network attachment definition
